@@ -22,6 +22,8 @@ namespace Commands
     /// </summary>
     public partial class MainWindow : Window
     {
+        public string path { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
@@ -38,7 +40,7 @@ namespace Commands
             OpenFileDialog ofd = new OpenFileDialog() ;
             if (ofd.ShowDialog() == true)
             {
-                string path = ofd.FileName;
+                path = ofd.FileName;
                 FileStream fs = new FileStream(path, FileMode.Open);
                 StreamReader sr = new StreamReader(fs,Encoding.Default);
                 string content = sr.ReadToEnd();
@@ -57,7 +59,9 @@ namespace Commands
 
         private void SaveCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-
+            File.WriteAllText(path, textbox1.Text);
+            MessageBox.Show("Saved!", "Message",
+                 MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void OpenCommand_Executed_1(object sender, ExecutedRoutedEventArgs e)
